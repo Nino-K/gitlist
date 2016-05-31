@@ -1,4 +1,4 @@
-# this the endpoint we need to call
+
 
 TODO:
 - call api from main
