@@ -13,7 +13,7 @@ const (
 )
 
 type Repository struct {
-	Id          int
+	Id          int    `json:"id"`
 	Name        string `json:"name"`
 	FullName    string `json:"full_name"`
 	Description string `json:"description"`

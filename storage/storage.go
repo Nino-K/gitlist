@@ -2,6 +2,7 @@ package storage
 
 import (
 	"encoding/gob"
+	"errors"
 	"os"
 
 	"github.com/nino-k/gitlist/apihandler"
@@ -45,6 +46,23 @@ func (s *Storage) Decode() ([]Data, error) {
 		return nil, err
 	}
 	return decodedData, nil
+}
+
+func (s *Storage) GetDataById(id int) (*Data, error) {
+	data, err := s.Decode()
+	if err != nil {
+		return nil, err
+	}
+	if len(data) < 1 {
+		return nil, errors.New("could not find data by the given Id")
+	}
+
+	println("============================= here ", len(data))
+	for _, d := range data {
+		println(d.Id)
+		println(d.Repo.FullName)
+	}
+	return &data[id], nil
 }
 
 func ConvertToStorageData(repos []apihandler.Repository) []Data {

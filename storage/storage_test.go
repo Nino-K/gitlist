@@ -8,7 +8,21 @@ import (
 	"github.com/nino-k/gitlist/apihandler"
 )
 
-var testPath = os.TempDir() + "testFile"
+var (
+	storage  *Storage
+	testPath = os.TempDir() + "testFile"
+)
+
+func TestMain(m *testing.M) {
+	//defer cleanUp(testPath)
+	storage = New(testPath)
+	m.Run()
+	//	sig := m.Run()
+	//	if sig != 0 {
+	//		os.Exit(sig)
+	//	}
+	cleanUp(testPath)
+}
 
 func TestEncode(t *testing.T) {
 	t.Log("Always creates a new file and override existing one")
@@ -54,8 +68,6 @@ func TestEncode(t *testing.T) {
 func TestDecodeError(t *testing.T) {
 	t.Log("Returns an error if")
 	{
-		storage := New(testPath)
-
 		t.Log("file does not exist")
 		{
 			err := os.Remove(testPath)
@@ -84,7 +96,6 @@ func TestDecodeError(t *testing.T) {
 func TestDecode(t *testing.T) {
 	t.Log("Retrieves correct data")
 	{
-		storage := New(testPath)
 		repos := apihandler.GetTestRepos("one", "two", "three", "four")
 		dataToEncode := ConvertToStorageData(repos.Items)
 		err := storage.Encode(dataToEncode)
@@ -98,7 +109,6 @@ func TestDecode(t *testing.T) {
 func TestDecodeMultipleTimes(t *testing.T) {
 	t.Log("Can be called multiple times")
 	{
-		storage := New(testPath)
 		repos := apihandler.GetTestRepos("one", "two", "three", "four")
 		dataToEncode := ConvertToStorageData(repos.Items)
 		err := storage.Encode(dataToEncode)
@@ -115,6 +125,46 @@ func TestDecodeMultipleTimes(t *testing.T) {
 		// decode and verify repos third time
 		verifyDecodingSuccess(storage, repos.Items, t)
 	}
+}
+
+func TestGetDataById(t *testing.T) {
+	t.Log("Returns single Data that is retrieved by a given Id")
+	{
+		firstRepoId := 1
+
+		repos := apihandler.GetTestRepos("one")
+		dataToEncode := ConvertToStorageData(repos.Items)
+		err := storage.Encode(dataToEncode)
+		if err != nil {
+			t.Errorf("Encode failed: %v", err)
+		}
+		data, err := storage.GetDataById(0)
+		if err != nil {
+			t.Errorf("GetDataById failed: %v", err)
+		}
+		if data.Id != firstRepoId {
+			t.Error("Id does not match")
+		}
+
+		apihandler.Verify(data.Repo, dataToEncode[0].Repo, t)
+	}
+}
+
+func TestGetDataByIdError(t *testing.T) {
+	t.Log("Returns error and nil data if data not found")
+	{
+		data, err := storage.GetDataById(1)
+		if data != nil {
+			t.Error("Expected data to be nil")
+		}
+		if err == nil {
+			t.Error("Expected error not to be nil")
+		}
+	}
+}
+
+func cleanUp(path string) {
+	os.Remove(path)
 }
 
 func verifyDecodingSuccess(storage *Storage, repos []apihandler.Repository, t *testing.T) {
@@ -139,5 +189,4 @@ func verifyDecodingFailure(storage *Storage, t *testing.T) {
 	if repos != nil {
 		t.Error("expected repos to be nil")
 	}
-
 }

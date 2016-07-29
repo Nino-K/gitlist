@@ -11,10 +11,15 @@ import (
 	"github.com/olekukonko/tablewriter"
 )
 
-func queryAndOutput(repoName string) {
-	testUrl := fmt.Sprintf("https://api.github.com/search/repositories?q=%s+language:go&sort=starts", repoName)
+var (
+	storagePath = fmt.Sprintf("%s/.gitlist", os.Getenv("HOME"))
+	strg        = storage.New(storagePath)
+)
 
-	apiHandler := apihandler.New(testUrl)
+func queryAndOutput(repoName string) {
+	apiUrl := fmt.Sprintf("https://api.github.com/search/repositories?q=%s+language:go&sort=starts", repoName)
+
+	apiHandler := apihandler.New(apiUrl)
 	repos, err := apiHandler.GetRepos()
 	if err != nil {
 		log.Fatalf("something went wrong calling github API: %v", err)
@@ -22,7 +27,9 @@ func queryAndOutput(repoName string) {
 
 	tableData := storage.ConvertToStorageData(repos)
 	outputTable(tableData)
-
+	if err := strg.Encode(tableData); err != nil {
+		log.Fatalf("could not catch data: %v", err)
+	}
 }
 
 func outputTable(data []storage.Data) {
