@@ -1,6 +1,7 @@
 default: test 
 
 test:            
+	godep restore
 	go test -v -race ./...
 
 build: 
