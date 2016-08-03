@@ -10,7 +10,7 @@ import (
 
 var (
 	storage  *Storage
-	testPath = os.TempDir() + "testFile"
+	testPath = os.TempDir() + "/testFile"
 )
 
 func TestMain(m *testing.M) {
