@@ -30,9 +30,9 @@ For example:
 gitlist detail 4`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			fmt.Println("detail called")
+			fmt.Println("you must specify a repo id")
 		} else {
-			fmt.Println("detail called with: " + args[0])
+			showDetail(args[0])
 		}
 	},
 }

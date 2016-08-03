@@ -1,15 +1,45 @@
+[![Build Status](https://travis-ci.org/Nino-K/gitlist.svg?branch=master)](https://travis-ci.org/Nino-K/gitlist)
 
+#GitList
 
-TODO:
-- call api from main
-- sort by rank/star/popularity(using some sort of a sorter struct) and make optional
-- allow get details by repo id
-- get the arg from user
+Helper tool to get details about golang repositories on Github
 
-Workflow:
+## Install:
 
-- call to  `main show [reponame]` also stroes data to the storage
-- when call to detail occurs, api call made from corresponding id that got retrieved from disk
-- on every call to `main show [reponame]` the storage is overwitten with new data on the disk
-- optional, to increase efficiency of the api calls. We should not make any API call if stored data on the  disk 
-is not older than a period(??????) of time
+`make install`
+
+## Usage:
+
+#### - Get all repos that include a given keyword
+
+`gitlist show tail`
+
+```
++----+--------------+-------------------------------------+
+| #  |     NAME     |                 URL                 |
++----+--------------+-------------------------------------+
+|  1 | tail         | github.com/hpcloud/tail             |
+|  2 | tailf        | github.com/aybabtme/tailf           |
+|  3 | tail         | github.com/go-zoo/tail              |
+|  4 | tail         | github.com/mangalaman93/tail        |
+|  5 | tail         | github.com/cwiggers/tail            |
+|  6 | tail         | github.com/errnoh/tail              |
+|  7 | tail         | github.com/timperman/tail           |
+|  8 | tail         | github.com/paulstuart/tail          |
++----+--------------+-------------------------------------+
+
+```
+#### - Get details about a specific repo
+
+`gitlist detail 1`
+
+```
++------+--------------------------------+-----------------------------------+-------------------------------------+---------------------------------+
+| NAME |          DESCRIPTION           |              GITURL               |              CLONEURL               |             SSHURL              |
++------+--------------------------------+-----------------------------------+-------------------------------------+---------------------------------+
+| tail | Go package for reading from    | git://github.com/hpcloud/tail.git | https://github.com/hpcloud/tail.git | git@github.com:hpcloud/tail.git |
+|      | continously updated files      |                                   |                                     |                                 |
+|      | (tail -f)                      |                                   |                                     |                                 |
++------+--------------------------------+-----------------------------------+-------------------------------------+---------------------------------+
+```
+

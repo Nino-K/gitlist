@@ -42,3 +42,32 @@ func outputTable(data []storage.Data) {
 	}
 	table.Render()
 }
+
+func showDetail(id string) {
+	dataId, err := strconv.Atoi(id)
+	if err != nil {
+		log.Fatalf("Error Converting Id: %v", err)
+	}
+	storage := storage.New(storagePath)
+	data, err := storage.GetDataById(dataId)
+	if err != nil {
+		log.Fatalf("FindById: %v", err)
+	}
+	table := tablewriter.NewWriter(os.Stdout)
+
+	table.SetHeader([]string{
+		"Name",
+		"Description",
+		"GitURL",
+		"CloneURL",
+		"SshURL"})
+
+	table.Append([]string{
+		data.Repo.Name,
+		data.Repo.Description,
+		data.Repo.GitURL,
+		data.Repo.CloneURL,
+		data.Repo.SshURL})
+	table.Render()
+
+}

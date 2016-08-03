@@ -29,7 +29,7 @@ var RootCmd = &cobra.Command{
 They are also sorted by popularity unless specified.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			fmt.Println("You must specify a repo name")
+			fmt.Println("You must specify a repo name, see \"gitlist --help\" for more help ")
 			os.Exit(-1)
 		}
 	},

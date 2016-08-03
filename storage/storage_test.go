@@ -138,7 +138,7 @@ func TestGetDataById(t *testing.T) {
 		if err != nil {
 			t.Errorf("Encode failed: %v", err)
 		}
-		data, err := storage.GetDataById(0)
+		data, err := storage.GetDataById(firstRepoId)
 		if err != nil {
 			t.Errorf("GetDataById failed: %v", err)
 		}
@@ -153,6 +153,7 @@ func TestGetDataById(t *testing.T) {
 func TestGetDataByIdError(t *testing.T) {
 	t.Log("Returns error and nil data if data not found")
 	{
+		cleanUp(testPath)
 		data, err := storage.GetDataById(1)
 		if data != nil {
 			t.Error("Expected data to be nil")
@@ -161,10 +162,6 @@ func TestGetDataByIdError(t *testing.T) {
 			t.Error("Expected error not to be nil")
 		}
 	}
-}
-
-func cleanUp(path string) {
-	os.Remove(path)
 }
 
 func verifyDecodingSuccess(storage *Storage, repos []apihandler.Repository, t *testing.T) {
@@ -189,4 +186,8 @@ func verifyDecodingFailure(storage *Storage, t *testing.T) {
 	if repos != nil {
 		t.Error("expected repos to be nil")
 	}
+}
+
+func cleanUp(path string) {
+	os.Remove(path)
 }
