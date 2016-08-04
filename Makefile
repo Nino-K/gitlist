@@ -8,7 +8,7 @@ build:
 	go build -v -race -o gitlist
 
 addPath:
-	ln -s `pwd`/gitlist /usr/local/bin
+	ln -sf `pwd`/gitlist /usr/local/bin
 
 install: test build addPath
 

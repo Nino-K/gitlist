@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/nino-k/gitlist/apihandler"
+	"github.com/Nino-K/gitlist/apihandler"
 )
 
 var (

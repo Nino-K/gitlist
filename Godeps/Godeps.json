@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/nino-k/gitlist",
+	"ImportPath": "github.com/Nino-K/gitlist",
 	"GoVersion": "go1.6",
 	"Deps": [
 		{

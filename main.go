@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/nino-k/gitlist/cmd"
+	"github.com/Nino-K/gitlist/cmd"
 )
 
 func main() {

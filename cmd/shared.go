@@ -6,8 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/nino-k/gitlist/apihandler"
-	"github.com/nino-k/gitlist/storage"
+	"github.com/Nino-K/gitlist/apihandler"
+	"github.com/Nino-K/gitlist/storage"
 	"github.com/olekukonko/tablewriter"
 )
 
