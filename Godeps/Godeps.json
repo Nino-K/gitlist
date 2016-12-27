@@ -1,7 +1,12 @@
 {
 	"ImportPath": "github.com/Nino-K/gitlist",
-	"GoVersion": "go1.6",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v75",
 	"Deps": [
+		{
+			"ImportPath": "github.com/inconshreveable/mousetrap",
+			"Rev": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+		},
 		{
 			"ImportPath": "github.com/mattn/go-runewidth",
 			"Comment": "v0.0.1",
