@@ -100,7 +100,7 @@ func TestGetRepos(t *testing.T) {
 		testRepos := GetTestRepos("first_repo", "second_repo", "third_repo")
 		responseBody, err := json.Marshal(testRepos)
 		if err != nil {
-			t.Error("Marshalling failed: %v", err)
+			t.Errorf("Marshalling failed: %v", err)
 		}
 		testHandler = func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
